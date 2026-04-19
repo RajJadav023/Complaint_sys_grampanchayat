@@ -2,8 +2,11 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import api from '../api/axios';
 import { AuthContext } from '../context/AuthContext';
+import { useTranslation } from 'react-i18next';
+import ScrollReveal from '../components/ScrollReveal';
 
 export default function Profile() {
+    const { t } = useTranslation();
     const { user: authUser, login } = useContext(AuthContext);
     const [userData, setUserData] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
@@ -38,10 +41,10 @@ export default function Profile() {
             setUserData(response.data);
             login(response.data); // Update context
             setIsEditing(false);
-            setMessage({ type: 'success', text: 'Profile updated successfully!' });
+            setMessage({ type: 'success', text: t('profile.success') });
             setTimeout(() => setMessage({ type: '', text: '' }), 3000);
         } catch (err) {
-            setMessage({ type: 'error', text: 'Update failed. Check your connection.' });
+            setMessage({ type: 'error', text: t('profile.error') });
         } finally {
             setLoading(false);
         }
@@ -57,20 +60,20 @@ export default function Profile() {
 
     return (
         <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-            <div className="mb-12 flex justify-between items-end">
+            <ScrollReveal className="mb-12 flex justify-between items-end">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-900 tracking-tight">Citizen Profile</h1>
-                    <p className="mt-1 text-gray-500 font-medium text-sm">Review your official DCMS identity and regional records.</p>
+                    <h1 className="text-2xl font-bold text-gray-900 tracking-tight">{t('profile.title')}</h1>
+                    <p className="mt-1 text-gray-500 font-medium text-sm">{t('profile.subtitle')}</p>
                 </div>
                 {!isEditing && (
                     <button
                         onClick={() => setIsEditing(true)}
                         className="px-6 py-2.5 bg-gray-900 text-white text-[10px] font-bold uppercase tracking-widest rounded-xl hover:bg-black transition-all"
                     >
-                        Edit Profile
+                        {t('profile.edit')}
                     </button>
                 )}
-            </div>
+            </ScrollReveal>
 
             {message.text && (
                 <div className={`mb-8 p-4 rounded-2xl text-xs font-bold border-l-4 animate-in fade-in slide-in-from-top-4 duration-500 ${message.type === 'success' ? 'bg-green-50 text-green-800 border-green-500' : 'bg-red-50 text-red-800 border-red-500'}`}>
@@ -78,7 +81,7 @@ export default function Profile() {
                 </div>
             )}
 
-            <div className="bg-white rounded-[40px] shadow-[0_20px_50px_rgba(0,0,0,0.04)] border border-gray-100 overflow-hidden">
+            <ScrollReveal delay={200} className="bg-white rounded-[40px] shadow-[0_20px_50px_rgba(0,0,0,0.04)] border border-gray-100 overflow-hidden">
                 <div className="p-8 md:p-12">
                     <div className="flex flex-col md:flex-row items-center md:items-start gap-10 mb-12">
                         <div className="h-24 w-24 bg-blue-600 rounded-[30px] flex items-center justify-center text-4xl font-bold text-white shadow-2xl shadow-blue-500/10 uppercase shrink-0">
@@ -88,10 +91,10 @@ export default function Profile() {
                             <h2 className="text-xl font-bold text-gray-900 tracking-tight mb-2">{user.name}</h2>
                             <div className="flex flex-wrap justify-center md:justify-start gap-3">
                                 <span className="px-4 py-1.5 bg-blue-50 text-blue-700 text-[10px] font-bold uppercase tracking-widest rounded-full border border-blue-100">
-                                    {user.role} Identity
+                                    {user.role} {t('profile.labels.identity')}
                                 </span>
                                 <span className="px-4 py-1.5 bg-gray-50 text-gray-600 text-[10px] font-bold uppercase tracking-widest rounded-full border border-gray-100 italic">
-                                    Verified Member
+                                    {t('profile.labels.verified')}
                                 </span>
                             </div>
                         </div>
@@ -100,11 +103,11 @@ export default function Profile() {
                     <form onSubmit={handleSave} className="space-y-10 pt-10 border-t border-gray-50">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
                             {[
-                                { label: 'Full Official Name', name: 'name', value: user.name, icon: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z' },
-                                { label: 'Secure Email Address', name: 'email', value: user.email, icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' },
-                                { label: 'Verified Contact', name: 'phoneNumber', value: user.phoneNumber || 'Not Linked', icon: 'M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z' },
-                                { label: 'Geographic Root (PIN)', name: 'pincode', value: user.pincode || 'Not Set', icon: 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z' },
-                                { label: 'Village / Division', name: 'village', value: user.village || 'Pending Grid Search', icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4' },
+                                { label: t('profile.labels.name'), name: 'name', value: user.name, icon: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z' },
+                                { label: t('profile.labels.email'), name: 'email', value: user.email, icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' },
+                                { label: t('profile.labels.phone'), name: 'phoneNumber', value: user.phoneNumber || 'Not Linked', icon: 'M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z' },
+                                { label: t('profile.labels.pincode'), name: 'pincode', value: user.pincode || 'Not Set', icon: 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z' },
+                                { label: t('profile.labels.village'), name: 'village', value: user.village || 'Pending Grid Search', icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4' },
                             ].map((field) => (
                                 <div key={field.name} className="flex gap-6 group">
                                     <div className="h-10 w-10 bg-gray-50 rounded-xl flex items-center justify-center shrink-0 border border-gray-100 group-hover:border-blue-100 group-hover:bg-blue-50/50 transition-colors">
@@ -135,7 +138,7 @@ export default function Profile() {
                                     </svg>
                                 </div>
                                 <div className="flex-1">
-                                    <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Detailed Address</label>
+                                    <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">{t('profile.labels.address')}</label>
                                     {isEditing ? (
                                         <textarea
                                             name="address"
@@ -159,20 +162,20 @@ export default function Profile() {
                                     type="submit"
                                     className="flex-1 py-4 bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest rounded-3xl shadow-xl shadow-blue-500/20 hover:bg-blue-700 transition-all hover:-translate-y-1"
                                 >
-                                    Synchronize Records
+                                    {t('profile.save')}
                                 </button>
                                 <button
                                     type="button"
                                     onClick={() => setIsEditing(false)}
                                     className="px-10 py-4 bg-gray-100 text-gray-500 text-[10px] font-black uppercase tracking-widest rounded-3xl hover:bg-gray-200 transition-all"
                                 >
-                                    Cancel
+                                    {t('profile.cancel')}
                                 </button>
                             </div>
                         )}
                     </form>
                 </div>
-            </div>
+            </ScrollReveal>
         </div>
     );
 }

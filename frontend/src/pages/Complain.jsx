@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/axios';
+import { useTranslation } from 'react-i18next';
+import ScrollReveal from '../components/ScrollReveal';
 
 export default function Complain() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         title: '',
@@ -36,7 +39,7 @@ export default function Complain() {
                 documentUrl: formData.documentUrl
             };
             await api.post('/complaints', payload);
-            setMessage({ type: 'success', text: 'Report successfully filed. Official tracking is now active.' });
+            setMessage({ type: 'success', text: t('complain.success') });
 
             // Clear form
             setFormData({
@@ -56,7 +59,7 @@ export default function Complain() {
             console.error('Failed to register complaint:', error.response?.data?.message || error.message);
             setMessage({
                 type: 'error',
-                text: error.response?.data?.message || 'Failed to submit report. Access denied or connection lost.'
+                text: error.response?.data?.message || t('complain.error')
             });
         } finally {
             setIsSubmitting(false);
@@ -65,12 +68,12 @@ export default function Complain() {
 
     return (
         <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-            <div className="mb-10 text-center">
-                <h1 className="text-4xl font-black text-gray-900 tracking-tight">Post Digital Report</h1>
-                <p className="mt-2 text-gray-500 font-medium tracking-tight">Rapid response for village infrastructure issues.</p>
-            </div>
+            <ScrollReveal className="mb-10 text-center">
+                <h1 className="text-4xl font-black text-gray-900 tracking-tight">{t('complain.title')}</h1>
+                <p className="mt-2 text-gray-500 font-medium tracking-tight">{t('complain.subtitle')}</p>
+            </ScrollReveal>
 
-            <div className="bg-white rounded-[40px] shadow-[0_30px_60px_rgba(0,0,0,0.05)] border border-gray-100 overflow-hidden">
+            <ScrollReveal delay={200} className="bg-white rounded-[40px] shadow-[0_30px_60px_rgba(0,0,0,0.05)] border border-gray-100 overflow-hidden">
                 <div className="p-8 md:p-12">
                     {message.text && (
                         <div className={`mb-10 p-5 rounded-3xl text-sm font-bold border-l-4 animate-in fade-in slide-in-from-top-4 duration-500 ${message.type === 'success'
@@ -83,21 +86,21 @@ export default function Complain() {
 
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="space-y-1">
-                            <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest px-1">Report Title</label>
+                            <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest px-1">{t('complain.labels.title')}</label>
                             <input
                                 type="text"
                                 name="title"
                                 value={formData.title}
                                 onChange={handleChange}
                                 className="block w-full px-5 py-3.5 bg-gray-50/50 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-blue-100 outline-none transition-all font-bold text-gray-700 placeholder-gray-300"
-                                placeholder="e.g. Broken streetlight on Main St"
+                                placeholder={t('complain.placeholders.title')}
                                 required
                             />
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="space-y-1">
-                                <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest px-1">Category</label>
+                                <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest px-1">{t('complain.labels.category')}</label>
                                 <select
                                     name="category"
                                     value={formData.category}
@@ -105,13 +108,13 @@ export default function Complain() {
                                     className="block w-full px-5 py-3.5 bg-gray-50/50 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-blue-100 outline-none transition-all font-bold text-gray-700"
                                 >
                                     {['Electricity', 'Road', 'Water', 'Sanitization', 'Garbage', 'Other'].map(cat => (
-                                        <option key={cat} value={cat}>{cat}</option>
+                                        <option key={cat} value={cat}>{t(`complain.categories.${cat}`)}</option>
                                     ))}
                                 </select>
                             </div>
 
                             <div className="space-y-1">
-                                <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest px-1">Priority Level</label>
+                                <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest px-1">{t('complain.labels.priority')}</label>
                                 <select
                                     name="priority"
                                     value={formData.priority}
@@ -119,28 +122,28 @@ export default function Complain() {
                                     className="block w-full px-5 py-3.5 bg-gray-50/50 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-blue-100 outline-none transition-all font-bold text-gray-700"
                                 >
                                     {['Low', 'Medium', 'High'].map(prio => (
-                                        <option key={prio} value={prio}>{prio}</option>
+                                        <option key={prio} value={prio}>{t(`complain.priorities.${prio}`)}</option>
                                     ))}
                                 </select>
                             </div>
                         </div>
 
                         <div className="space-y-1">
-                            <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest px-1">Specific Location in Village</label>
+                            <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest px-1">{t('complain.labels.location')}</label>
                             <input
                                 type="text"
                                 name="address"
                                 value={formData.address}
                                 onChange={handleChange}
                                 className="block w-full px-5 py-3.5 bg-gray-50/50 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-blue-100 outline-none transition-all font-medium text-gray-700 placeholder-gray-300"
-                                placeholder="E.g. Ward 3, Near Old Banyan Tree"
+                                placeholder={t('complain.placeholders.location')}
                                 required
                             />
                         </div>
 
                         <div className="space-y-1">
                             <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest px-1 flex justify-between">
-                                Detailed Description
+                                {t('complain.labels.description')}
                                 <span className={`${formData.description.length > 200 ? 'text-red-500' : 'text-gray-300'}`}>{formData.description.length}/300</span>
                             </label>
                             <textarea
@@ -150,7 +153,7 @@ export default function Complain() {
                                 value={formData.description}
                                 onChange={handleChange}
                                 className="block w-full px-5 py-4 bg-gray-50/50 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-blue-100 outline-none transition-all font-medium text-gray-700 placeholder-gray-300 resize-none"
-                                placeholder="Provide as much detail as possible to assist officials..."
+                                placeholder={t('complain.placeholders.description')}
                                 required
                             />
                         </div>
@@ -161,12 +164,12 @@ export default function Complain() {
                                 disabled={isSubmitting}
                                 className={`w-full py-5 bg-blue-600 hover:bg-blue-700 text-white font-black text-xs uppercase tracking-[0.2em] rounded-2xl shadow-xl shadow-blue-500/20 transition-all transform active:scale-[0.98] flex items-center justify-center ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:-translate-y-1'}`}
                             >
-                                {isSubmitting ? 'Synchronizing with District Console...' : 'Submit Official Report'}
+                                {isSubmitting ? t('complain.submitting') : t('complain.submit')}
                             </button>
                         </div>
                     </form>
                 </div>
-            </div>
+            </ScrollReveal>
         </div>
     );
 }

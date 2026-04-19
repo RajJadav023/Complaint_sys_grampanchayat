@@ -1,0 +1,231 @@
+{
+  "navbar": {
+    "home": "Home",
+    "complain": "Complain",
+    "status": "Status",
+    "profile": "Profile",
+    "about": "About",
+    "help": "Help",
+    "documents": "Documents",
+    "admin": "Admin Panel",
+    "authenticated": "Authenticated",
+    "signOut": "Sign Out",
+    "logIn": "Log In",
+    "joinNetwork": "Join Network"
+  },
+  "home": {
+    "heroTitle": "Digital Complain",
+    "heroSubtitle": "Management System",
+    "heroDescription": "Empowering Grampanchayat villages with transparency and efficiency. Register complaints and track status smarter.",
+    "fileComplaint": "File a Complaint",
+    "trackStatus": "Track Status",
+    "villageUpdates": "Village Updates",
+    "villageUpdatesDesc": "Stay informed on what's happening around your local Grampanchayat.",
+    "liveBroadcast": "Live Broadcast Active",
+    "noBroadcasts": "No active broadcasts",
+    "noBroadcastsDesc": "Check back later for upcoming village events and infrastructure updates.",
+    "manageComplaints": "Manage Complaints"
+  },
+  "complain": {
+    "title": "Post Digital Report",
+    "subtitle": "Rapid response for village infrastructure issues.",
+    "labels": {
+      "title": "Report Title",
+      "category": "Category",
+      "priority": "Priority Level",
+      "location": "Specific Location in Village",
+      "description": "Detailed Description"
+    },
+    "placeholders": {
+      "title": "e.g. Broken streetlight on Main St",
+      "location": "E.g. Ward 3, Near Old Banyan Tree",
+      "description": "Provide as much detail as possible to assist officials..."
+    },
+    "categories": {
+      "Electricity": "Electricity",
+      "Road": "Road",
+      "Water": "Water",
+      "Sanitization": "Sanitization",
+      "Garbage": "Garbage",
+      "Other": "Other"
+    },
+    "priorities": {
+      "Low": "Low",
+      "Medium": "Medium",
+      "High": "High"
+    },
+    "submit": "Submit Official Report",
+    "submitting": "Synchronizing with District Console...",
+    "success": "Report successfully filed. Official tracking is now active.",
+    "error": "Failed to submit report. Access denied or connection lost."
+  },
+  "status": {
+    "title": "Active Reports",
+    "subtitle": "Track the lifecycle of your filed complaints in real-time.",
+    "liveTracking": "Live Tracking Active",
+    "syncing": "Synchronizing with Grid...",
+    "noReports": "No Reports Found",
+    "noReportsDesc": "Your submission history is currently clear.",
+    "labels": {
+      "description": "Your Description",
+      "officialResponse": "Official Response",
+      "awaiting": "Awaiting Authority Review...",
+      "priority": "Priority",
+      "village": "Region Unified"
+    },
+    "states": {
+      "Pending": "Pending",
+      "In Progress": "In Progress",
+      "Resolved": "Resolved"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome Back",
+      "subtitle": "Please enter your details to sign in.",
+      "email": "Email Address",
+      "password": "Password",
+      "signIn": "Sign In",
+      "authorizing": "Authorizing...",
+      "newToDCMS": "New to DCMS?",
+      "createAccount": "Create Account",
+      "success": "Access Granted. Initializing session...",
+      "error": "Authentication failed. Please check your credentials."
+    },
+    "register": {
+      "title": "Join DCMS",
+      "subtitle": "Create your official village profile.",
+      "name": "Full Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "pincode": "PIN Code",
+      "village": "Village / Ward",
+      "address": "Full Address",
+      "password": "Password",
+      "confirmPassword": "Verify Password",
+      "signUp": "Create Account",
+      "registering": "Registering Official Profile...",
+      "alreadyHaveAccount": "Already have an account?",
+      "logIn": "Sign In",
+      "success": "Profile Created. Redirecting to Portal...",
+      "error": "Registration failed. Please verify your details.",
+      "mismatch": "Verification mismatch: Passwords do not match.",
+      "recognizing": "Region recognized:",
+      "invalidPin": "Invalid PIN Code. Please check."
+    }
+  },
+  "about": {
+    "heroTitle": "Bridging the Gap Between Villages & Governance",
+    "heroDesc": "DCMS is a next-generation platform designed to empower rural communities by digitizing the grievance redressal process and ensuring accountability at every level.",
+    "mission": "Our Mission",
+    "missionTitle": "Transparency for every villager, accountability for every official.",
+    "missionDesc": "Our primary mission is to provide an accessible and transparent digital portal where villagers can report issues without having to visit government offices multiple times.",
+    "points": [
+      "Real-time status tracking for all complaints",
+      "Direct redirection to relevant district authorities",
+      "Empowering local leadership with data-driven insights"
+    ],
+    "stats": {
+      "solved": "Complaints Solved",
+      "digitized": "Villages Digitized",
+      "response": "Response Rate",
+      "uptime": "System Uptime"
+    },
+    "valuesTitle": "Our Core Values",
+    "valuesSubtitle": "The foundation of everything we build at DCMS.",
+    "values": {
+      "integrity": {
+        "title": "Integrity",
+        "desc": "Honesty and ethical accountability are the core of our digital infrastructure."
+      },
+      "innovation": {
+        "title": "Innovation",
+        "desc": "Using AI and cloud technology to simplify complex bureaucratic workflows."
+      },
+      "empowerment": {
+        "title": "Empowerment",
+        "desc": "Putting power back into the hands of citizens through digital accessibility."
+      }
+    },
+    "ctaTitle": "Want to implement DCMS in your village?",
+    "ctaDesc": "We are scaling to 1,000+ villages by 2026. Join the movement.",
+    "ctaButton": "Contact Official Support"
+  },
+  "help": {
+    "title": "Help Center",
+    "subtitle": "Find answers to common questions about the DCMS portal.",
+    "categoriesTitle": "Help Categories",
+    "categories": {
+      "general": "General Support",
+      "complaints": "Complaint Flow",
+      "technical": "Identity & Access"
+    },
+    "faqs": {
+      "general": [
+        { "q": "What is DCMS?", "a": "The Digital Complain Management System (DCMS) is a centralized portal for villagers to report infrastructure, electricity, or water issues directly to their Grampanchayat and district officials." },
+        { "q": "Who can use this portal?", "a": "Any registered resident of the villages currently integrated into the system can use DCMS to file complaints and track their progress." },
+        { "q": "Is there any cost for filing a complaint?", "a": "No, DCMS is a completely free service provided for public convenience and transparency." }
+      ],
+      "complaints": [
+        { "q": "How do I file a new complaint?", "a": "Navigate to the 'Complain' section in the sidebar/navbar, select the relevant category (e.g., Road, Electricity), provide the address and description, and click submit." },
+        { "q": "How long does it take to resolve a complaint?", "a": "Resolution times vary by category. Urgent issues like electricity usually take 24-48 hours, while major infrastructure projects may take longer." },
+        { "q": "How can I check my complaint status?", "a": "Go to the 'Status' page. You will see a list of all your complaints, their current state (Pending, Resolved, etc.), and official admin responses." }
+      ],
+      "technical": [
+        { "q": "I forgot my password, what should I do?", "a": "Currently, you can contact your local Grampanchayat IT administrator to reset your credentials manually." },
+        { "q": "Can I change my username?", "a": "Usernames are unique identity markers and cannot be changed once the account is created. You can, however, update your display name in the profile." },
+        { "q": "Is my data secure?", "a": "Yes, DCMS uses industry-standard encryption for passwords and maintains secure session cookies to protect your personal information." }
+      ]
+    },
+    "directHelp": "Need Direct Help?",
+    "directHelpDesc": "Our official support desk is available Monday to Saturday, 10 AM - 5 PM.",
+    "footer": {
+      "helpline": "District Helpline",
+      "grampanchayat": "Local Grampanchayat",
+      "hours": "Office Hours: 10AM - 6PM",
+      "version": "Platform Version"
+    }
+  },
+  "profile": {
+    "title": "Citizen Profile",
+    "subtitle": "Review your official DCMS identity and regional records.",
+    "edit": "Edit Profile",
+    "save": "Synchronize Records",
+    "cancel": "Cancel",
+    "success": "Profile updated successfully!",
+    "error": "Update failed. Check your connection.",
+    "labels": {
+      "name": "Full Official Name",
+      "email": "Secure Email Address",
+      "phone": "Verified Contact",
+      "pincode": "Geographic Root (PIN)",
+      "village": "Village / Division",
+      "address": "Detailed Address",
+      "identity": "Identity",
+      "verified": "Verified Member"
+    }
+  },
+  "documents": {
+    "title": "Document Portal",
+    "subtitle": "Identify required supporting documents for official IDs and village certificates.",
+    "selectService": "Select Required Service",
+    "checkRequired": "Check Requirements",
+    "requiredFor": "Official Requirements for",
+    "services": {
+      "pan": "PAN Card",
+      "aadhaar": "Aadhaar Card",
+      "birth": "Birth Certificate",
+      "ration": "Ration Card",
+      "voter": "Voter ID Card",
+      "income": "Income Certificate"
+    },
+    "requirements": {
+      "pan": ["Proof of Identity (Aadhaar/Voter ID)", "Proof of Date of Birth (Birth Cert/10th Marksheet)", "2 Recent Passport Size Photos"],
+      "aadhaar": ["Proof of Identity (PAN/Voter ID)", "Proof of Address (Electricity Bill/Ration Card)", "Date of Birth Proof"],
+      "birth": ["Hospital Discharge/Birth Record", "Identity Proof of both Parents", "Current Address Proof"],
+      "ration": ["Aadhaar Cards of all Family Members", "Latest Income Certificate", "Bank Passbook Front Page", "Local Residence Proof"],
+      "voter": ["Proof of Age (18+ Years)", "Current Address Proof", "Passport Size Photograph"],
+      "income": ["Income Affidavit / Latest Salary Slips", "Ration Card or Voter ID", "Self-Declaration Form"]
+    }
+  }
+}

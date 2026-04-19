@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Complain from './pages/Complain';
 import Status from './pages/Status';
+import Documents from './pages/Documents';
 import AdminDashboard from './pages/AdminDashboard';
 import Profile from './pages/Profile';
 import About from './pages/About';
@@ -42,6 +43,7 @@ function App() {
           <Route path="/" element={<ProtectedLayout><Home /></ProtectedLayout>} />
           <Route path="/complain" element={<ProtectedLayout><Complain /></ProtectedLayout>} />
           <Route path="/status" element={<ProtectedLayout><Status /></ProtectedLayout>} />
+          <Route path="/documents" element={<ProtectedLayout><Documents /></ProtectedLayout>} />
           <Route path="/profile" element={<ProtectedLayout><Profile /></ProtectedLayout>} />
           <Route path="/admin" element={<ProtectedLayout adminOnly={true}><AdminDashboard /></ProtectedLayout>} />
           <Route path="/about" element={<ProtectedLayout><About /></ProtectedLayout>} />

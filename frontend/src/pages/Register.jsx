@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../api/axios';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
 export default function Register() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: '',
@@ -30,10 +32,10 @@ export default function Register() {
                     if (data.Status === "Success") {
                         // We take the first post office name as the village/area
                         setFormData(prev => ({ ...prev, village: data.PostOffice[0].Name }));
-                        setMessage({ type: 'success', text: `Region recognized: ${data.PostOffice[0].Division} Division.` });
+                        setMessage({ type: 'success', text: `${t('auth.register.recognizing')} ${data.PostOffice[0].Division}` });
                         setTimeout(() => setMessage({ type: '', text: '' }), 3000);
                     } else {
-                        setMessage({ type: 'error', text: 'Invalid PIN Code. Please check.' });
+                        setMessage({ type: 'error', text: t('auth.register.invalidPin') });
                     }
                 } catch (err) {
                     console.error("PIN fetch error", err);
@@ -43,7 +45,7 @@ export default function Register() {
             };
             fetchVillage();
         }
-    }, [formData.pincode]);
+    }, [formData.pincode, t]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -54,7 +56,7 @@ export default function Register() {
         setMessage({ type: '', text: '' });
 
         if (formData.password !== formData.confirmPassword) {
-            setMessage({ type: 'error', text: "Verification mismatch: Passwords do not match." });
+            setMessage({ type: 'error', text: t('auth.register.mismatch') });
             return;
         }
 
@@ -72,7 +74,7 @@ export default function Register() {
                 role: 'user'
             });
 
-            setMessage({ type: 'success', text: 'Identity created successfully. Securely redirecting...' });
+            setMessage({ type: 'success', text: t('auth.register.success') });
 
             setTimeout(() => {
                 navigate('/login');
@@ -80,7 +82,7 @@ export default function Register() {
         } catch (error) {
             setMessage({
                 type: 'error',
-                text: error.response?.data?.message || 'Registration failed. Database entry rejected.'
+                text: error.response?.data?.message || t('auth.register.error')
             });
             setIsSubmitting(false);
         }
@@ -101,7 +103,7 @@ export default function Register() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                         </svg>
                     </div>
-                    <h1 className="text-6xl font-black mb-6 tracking-tighter">Join the Digital Revolution</h1>
+                    <h1 className="text-6xl font-black mb-6 tracking-tighter">DCMS Portal</h1>
                     <p className="text-blue-100 text-lg font-medium leading-relaxed italic opacity-80">
                         "Building a transparent bridge between citizens and local governance."
                     </p>
@@ -113,8 +115,8 @@ export default function Register() {
                 <div className="w-full max-w-lg">
                     <div className="bg-white p-8 md:p-10 rounded-[40px] shadow-[0_20px_60px_rgba(0,0,0,0.06)] border border-gray-100">
                         <div className="mb-8">
-                            <h2 className="text-3xl font-black text-gray-900 tracking-tight">Create Account</h2>
-                            <p className="text-gray-400 text-sm font-medium mt-1">Fill in your details to get started.</p>
+                            <h2 className="text-3xl font-black text-gray-900 tracking-tight">{t('auth.register.title')}</h2>
+                            <p className="text-gray-400 text-sm font-medium mt-1">{t('auth.register.subtitle')}</p>
                         </div>
 
                         {message.text && (
@@ -126,26 +128,26 @@ export default function Register() {
                         <form onSubmit={handleSubmit} className="space-y-5">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="space-y-1">
-                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest px-2">Full Name</label>
+                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest px-2">{t('auth.register.name')}</label>
                                     <input
                                         type="text"
                                         name="name"
                                         value={formData.name}
                                         onChange={handleChange}
                                         className="block w-full px-5 py-3.5 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-blue-100 outline-none transition-all placeholder-gray-300 font-medium text-gray-700 bg-gray-50/50"
-                                        placeholder="Enter Full Name"
+                                        placeholder={t('auth.register.name')}
                                         required
                                     />
                                 </div>
                                 <div className="space-y-1">
-                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest px-2">Email Address</label>
+                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest px-2">{t('auth.register.email')}</label>
                                     <input
                                         type="email"
                                         name="email"
                                         value={formData.email}
                                         onChange={handleChange}
                                         className="block w-full px-5 py-3.5 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-blue-100 outline-none transition-all placeholder-gray-300 font-medium text-gray-700 bg-gray-50/50"
-                                        placeholder="email@example.com"
+                                        placeholder={t('auth.register.email')}
                                         required
                                     />
                                 </div>
@@ -153,19 +155,19 @@ export default function Register() {
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="space-y-1">
-                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest px-2">Phone Number</label>
+                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest px-2">{t('auth.register.phone')}</label>
                                     <input
                                         type="tel"
                                         name="phoneNumber"
                                         value={formData.phoneNumber}
                                         onChange={handleChange}
                                         className="block w-full px-5 py-3.5 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-blue-100 outline-none transition-all placeholder-gray-300 font-medium text-gray-700 bg-gray-50/50"
-                                        placeholder="10-digit Mobile"
+                                        placeholder={t('auth.register.phone')}
                                         required
                                     />
                                 </div>
                                 <div className="space-y-1">
-                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest px-2">PIN Code</label>
+                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest px-2">{t('auth.register.pincode')}</label>
                                     <div className="relative">
                                         <input
                                             type="text"
@@ -174,7 +176,7 @@ export default function Register() {
                                             onChange={handleChange}
                                             maxLength="6"
                                             className="block w-full px-5 py-3.5 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-blue-100 outline-none transition-all placeholder-gray-300 font-medium text-gray-700 bg-gray-50/50"
-                                            placeholder="400001"
+                                            placeholder={t('auth.register.pincode')}
                                             required
                                         />
                                         {isFetchingPin && (
@@ -187,34 +189,34 @@ export default function Register() {
                             </div>
 
                             <div className="space-y-1">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest px-2">Village / Ward</label>
+                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest px-2">{t('auth.register.village')}</label>
                                 <input
                                     type="text"
                                     name="village"
                                     value={formData.village}
                                     onChange={handleChange}
                                     className="block w-full px-5 py-3.5 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-blue-100 outline-none transition-all placeholder-gray-300 font-medium text-gray-700 bg-gray-50/50"
-                                    placeholder="Auto-fetched or enter village"
+                                    placeholder={t('auth.register.village')}
                                     required
                                 />
                             </div>
 
                             <div className="space-y-1">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest px-2">Full Address</label>
+                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest px-2">{t('auth.register.address')}</label>
                                 <input
                                     type="text"
                                     name="address"
                                     value={formData.address}
                                     onChange={handleChange}
                                     className="block w-full px-5 py-3.5 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-blue-100 outline-none transition-all placeholder-gray-300 font-medium text-gray-700 bg-gray-50/50"
-                                    placeholder="House No., Street name"
+                                    placeholder={t('auth.register.address')}
                                     required
                                 />
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="space-y-1">
-                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest px-2">Password</label>
+                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest px-2">{t('auth.register.password')}</label>
                                     <input
                                         type="password"
                                         name="password"
@@ -226,7 +228,7 @@ export default function Register() {
                                     />
                                 </div>
                                 <div className="space-y-1">
-                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest px-2">Verify Password</label>
+                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest px-2">{t('auth.register.confirmPassword')}</label>
                                     <input
                                         type="password"
                                         name="confirmPassword"
@@ -244,14 +246,14 @@ export default function Register() {
                                 disabled={isSubmitting}
                                 className={`w-full py-5 px-6 mt-4 bg-blue-600 hover:bg-blue-700 text-white font-black text-xs uppercase tracking-widest rounded-2xl shadow-xl shadow-blue-500/20 transition-all ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:-translate-y-1'}`}
                             >
-                                {isSubmitting ? 'Processing Identity...' : 'Finalize Registration'}
+                                {isSubmitting ? t('auth.register.registering') : t('auth.register.signUp')}
                             </button>
                         </form>
 
                         <div className="mt-8 text-center text-[10px]">
-                            <span className="text-gray-400 font-black uppercase tracking-widest">Already have a profile? </span>
+                            <span className="text-gray-400 font-black uppercase tracking-widest">{t('auth.register.alreadyHaveAccount')} </span>
                             <Link to="/login" className="font-black text-blue-600 hover:text-blue-700 transition-colors uppercase tracking-[0.2em] ml-2">
-                                Sign In
+                                {t('auth.register.logIn')}
                             </Link>
                         </div>
                     </div>

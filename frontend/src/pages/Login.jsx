@@ -2,8 +2,10 @@ import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../api/axios';
 import { AuthContext } from '../context/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 export default function Login() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { login } = useContext(AuthContext);
     const [formData, setFormData] = useState({
@@ -25,7 +27,7 @@ export default function Login() {
         try {
             const response = await api.post('/auth/login', formData);
             login(response.data);
-            setMessage({ type: 'success', text: 'Access Granted. Initializing session...' });
+            setMessage({ type: 'success', text: t('auth.login.success') });
 
             setTimeout(() => {
                 if (response.data.role === 'admin') {
@@ -37,7 +39,7 @@ export default function Login() {
         } catch (error) {
             setMessage({
                 type: 'error',
-                text: error.response?.data?.message || 'Authentication failed. Please check your credentials.'
+                text: error.response?.data?.message || t('auth.login.error')
             });
             setIsSubmitting(false);
         }
@@ -71,8 +73,8 @@ export default function Login() {
                 <div className="w-full max-w-md">
                     <div className="bg-white p-10 rounded-3xl shadow-[0_20px_50px_rgba(8,112,184,0.07)] border border-gray-100">
                         <div className="mb-8">
-                            <h2 className="text-3xl font-black text-gray-900 tracking-tight">Welcome Back</h2>
-                            <p className="text-gray-500 font-medium mt-1">Please enter your details to sign in.</p>
+                            <h2 className="text-3xl font-black text-gray-900 tracking-tight">{t('auth.login.title')}</h2>
+                            <p className="text-gray-500 font-medium mt-1">{t('auth.login.subtitle')}</p>
                         </div>
 
                         {message.text && (
@@ -91,7 +93,7 @@ export default function Login() {
                                 value={formData.email}
                                 onChange={handleChange}
                                 className="block w-full px-5 py-4 border border-gray-200 rounded-2xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 outline-none transition-all placeholder-gray-300 font-medium text-gray-700 bg-gray-50/50"
-                                placeholder="Email Address"
+                                placeholder={t('auth.login.email')}
                                 required
                             />
                             <input
@@ -100,7 +102,7 @@ export default function Login() {
                                 value={formData.password}
                                 onChange={handleChange}
                                 className="block w-full px-5 py-4 border border-gray-200 rounded-2xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 outline-none transition-all placeholder-gray-300 font-medium text-gray-700 bg-gray-50/50"
-                                placeholder="Password"
+                                placeholder={t('auth.login.password')}
                                 required
                             />
                             <button
@@ -109,14 +111,14 @@ export default function Login() {
                                 className={`w-full py-5 px-6 bg-blue-600 hover:bg-blue-700 text-white font-black text-xs uppercase tracking-widest rounded-2xl shadow-xl shadow-blue-500/20 transition-all ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:-translate-y-1'
                                     }`}
                             >
-                                {isSubmitting ? 'Authorizing...' : 'Sign In'}
+                                {isSubmitting ? t('auth.login.authorizing') : t('auth.login.signIn')}
                             </button>
                         </form>
 
                         <div className="mt-10 text-center text-sm">
-                            <span className="text-gray-500 font-medium">New to DCMS? </span>
+                            <span className="text-gray-500 font-medium">{t('auth.login.newToDCMS')} </span>
                             <Link to="/register" className="font-black text-blue-600 hover:text-blue-700 transition-colors uppercase tracking-widest text-xs">
-                                Create Account
+                                {t('auth.login.createAccount')}
                             </Link>
                         </div>
                     </div>
